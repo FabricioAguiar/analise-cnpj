@@ -1,0 +1,41 @@
+---
+title: "analise de cnpj"
+output: html_document
+date: '2022-03-03'
+---
+
+# Como acessar a base de dados da receita federal e conseguir extrair informações sobre as empresas?
+
+Os dados sobre CNPJs de empresas é disponibilizado pela Receita Federal, entretanto esses dados são difíceis de serem trabalhados, tanto pelo seu formato quanto pelo seu tamanho e forma de disponibilização; Uma saída encontrada foi um pacote criado pelo projeto ["Base dos Dados"](https://basedosdados.org/), que armazena esse tipo de dado público em um banco de dados via Google Cloud, tornando posssível de ser acessado por meio de consultas Sql.
+
+1.  Primeiramente é necessário fazer a instalação do pacote;
+    ```{r}
+    #install.packages("basedosdados")
+
+    #library("basedosdados")
+    ```
+
+2.  Para fazer as consultas via R é necessário criar um projeto no [Google Cloud](https://console.cloud.google.com/home/) de onde será necessário extrair a informação de ID do PROJETO;
+
+    ```{r}
+    # Defina o seu projeto no Google Cloud
+    #set_billing_id("cnpjs-342918")
+    ```
+
+3.  Após esta etapa de configuração, já é possivel fazer consultas diretamente através do R, fique atento pois ao rodar sua primeira consulta o texto abaixo deve aparecer no console, no qual deve ser informado a conta do google associada a esta consulta, assim como as autorizações que esta conta terá; (0 para logar com uma conta nova/ 1 para logar com a conta ja informada)
+
+    ```{r}
+    #The bigrquery package is requesting access to your Google account.
+    #Select a pre-authorised account or enter '0' to obtain a new token.
+    #Press Esc/Ctrl + C to cancel.
+
+    ```
+
+4.  Rode novamente a consulta desejada;
+
+    ```{r}
+    #base_cobertura <- basedosdados::read_sql(query = 
+    #                                           'SELECT * 
+    #FROM `basedosdados.br_me_socios.empresa`
+    #                                         WHERE sigla_uf ="DF"')
+    ```
